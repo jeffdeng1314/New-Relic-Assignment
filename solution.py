@@ -8,9 +8,8 @@ import re
 # referrence https://stackoverflow.com/questions/265960/best-way-to-strip-punctuation-from-a-string
 REGEX = re.compile('[%s]' % re.escape(string.punctuation))
 
-# accept inpurt as files or line-by-line
 
-
+# accept input as files or line-by-line
 def main():
 
     # process stdin
@@ -18,7 +17,8 @@ def main():
 
         # checks if the stdin is not referring to terminal input
         if not sys.stdin.isatty():
-            process_stdin(sys.stdin)
+            print('>>>>>>> Process from stdin <<<<<<<')
+            process_stdin(sys.stdin.read())
         else:
             print('No input detected')
             exit(-1)
@@ -26,10 +26,17 @@ def main():
     # process the file/s from argument
     else:
         for f in sys.argv[1::]:
+            print(f'>>>>>>> {f} <<<<<<<')
             process_file(f)
 
 
-# def process_stdin(buff):
+def process_stdin(buff):
+    dictionary = {}
+    matches = find_matches_as_list(buff)
+    dictionary = get_map_of_all_content(matches)
+
+    print_result(dictionary)
+
 
 def process_file(target):
     dictionary = {}
@@ -47,8 +54,6 @@ def process_file(target):
 
 
 # process the text and return the valid words as a list
-
-
 def find_matches_as_list(line):
     matches = []
 
@@ -83,8 +88,8 @@ def print_result(d):
 
         sorted_by_values = sorted(d, key=d.get, reverse=True)
 
-        print('Phrase                           | Count')
-        print('----------------------------------------')
+        print('Phrase                         | Count')
+        print('--------------------------------------')
 
         for key in sorted_by_values:
             if counter == 0:
