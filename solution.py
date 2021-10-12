@@ -18,7 +18,7 @@ def main():
         # process the stdin from pipe if it's not referring to terminal inputs
         if not sys.stdin.isatty():
             print('>>>>>>> Process from stdin <<<<<<<')
-            process_stdin(sys.stdin.read())
+            parse_and_print(sys.stdin.read())
         else:
             print('No input detected')
             exit(-1)
@@ -27,31 +27,30 @@ def main():
     else:
         for f in sys.argv[1::]:
             print(f'>>>>>>> {f} <<<<<<<')
-            process_file(f)
-
-# reads from the stdin and print out the list of common sequences
+            parse_and_print(process_file(f))
 
 
-def process_stdin(buff):
-    dictionary = {}
-    matches = find_matches_as_list(buff)
-    dictionary = get_map_of_all_content(matches)
-
-    print_result(dictionary)
+# # reads from the stdin and print out the list of common sequences
+# def process_stdin(buff):
 
 
-# reads from a file and print out the list of common sequences
+# reads from a file and returns a string
 def process_file(target):
-    dictionary = {}
-
     with open(target, 'r') as f:
         s = ''
 
         # storing the file content to a string variable in case of a large file
         for line in f:
             s += line
+    return s
 
-    matches = find_matches_as_list(s)
+# takes in the string data, parse it, and print out the list of common sequences
+
+
+def parse_and_print(data):
+    dictionary = {}
+
+    matches = find_matches_as_list(data)
     dictionary = get_map_of_all_content(matches)
     print_result(dictionary)
 
