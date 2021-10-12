@@ -14,7 +14,6 @@ Once you have Python3 installed, you can follow the steps below to run the appli
 1. git clone https://github.com/jeffdeng1314/New-Relic-Assignment.git
 2. cd New-Relic-Assignment
 3. python solution.py text\ files/triangle_text.txt
-   or
 4. cat text\ files/triangle_text.txt | python solution.py
 
 ## Running Tests
